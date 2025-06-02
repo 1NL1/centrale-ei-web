@@ -1,48 +1,41 @@
 import logo from './logo.svg';
 import './Home.css';
-import { useState, useEffect } from 'react';
-import axios, {isCancel, AxiosError} from 'axios';
+import { useEffect, useState } from 'react';
+import { useFetchMovies } from './useFetchMovies';
+import Movie from '../../components/Movies/movie';
 
 function Home() {
-  const [movieName, setMovieName] = useState("");
-  const [movies,setMovies] = useState([])
+  const [movieName, setMovieName] = useState('');
+  const [moviesnew, Setmoviesnew] = useState([]);
+  const { movies } = useFetchMovies();
 
-  useEffect(fetchMovies,[])
+  useEffect(() => {
+    ChangeMovies();
+  }, [movieName, movies]);
 
-  function fetchMovies() {
-  axios({method: 'GET',
-  url: 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo'
+  function ChangeMovies() {
+    const filteredMovies = movies.filter((movie) =>
+      movie.title.toLowerCase().includes(movieName.toLowerCase())
+    );
+    Setmoviesnew(filteredMovies);
   }
-})
-  .then((response) => {
-		// Do something if call succeeded
-    console.log(response)
-    setMovies(response.data.results)
-  })
-  .catch((error) => {
-		// Do something if call failed
-		console.log(error)
-  });
-}
-  
+
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>NetfliCS</h1>
         <img src={logo} className="App-logo" alt="logo" />
-        <input value={movieName} onChange={(event) => setMovieName(event.target.value)}>
-        </input>
-        <p>
-          {movieName}
-        </p>
-        <ul>
-          {movies.map((movie) => (
-            <li key={movie.id}>{movie.title}</li> // ✅ afficher une string (ex : title)
+        <input
+          value={movieName}
+          onChange={(event) => setMovieName(event.target.value)}
+        ></input>
+        <p>{movieName}</p>
+        <div class="movie-grid">
+          {moviesnew.map((movie) => (
+            <Movie key={movie.id} movie={movie}></Movie>
           ))}
-      </ul>
+        </div>
       </header>
     </div>
   );

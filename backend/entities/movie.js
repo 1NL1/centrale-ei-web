@@ -13,6 +13,9 @@ const Movie = new typeorm.EntitySchema({
       unique: false,
     },
     release_date: { type: String },
+    genre_id: { type: 'simple-array' },
+    vote_average: { type: Number },
+    vote_count: { type: Number },
   },
 });
 

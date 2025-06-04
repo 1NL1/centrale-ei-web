@@ -60,3 +60,18 @@ npm run build
 ```
 npm run lint
 ```
+
+CinéSphère
+
+Taches:
+categories, barre de recherche --DAVID
+100+ films
+Remplir base de données/profil admin --SACHA
+Page dédiée pour chaque film  
+Notations (like/dislike/etoiles)  
+Films triés par pertinence fct des likes -> recommendation au choix --ALEXIS
+Beau et sans bug
+
+Bonus:
+Plusieurs profils utilisateur
+Un bouton pour pas tt afficher ("load more")

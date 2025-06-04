@@ -17,6 +17,20 @@ const Movie = new typeorm.EntitySchema({
     original_language: { type: String },
     popularity: { type: String },
     genre_ids: { type: String },
+    director_id: { type: Number, nullable: true },
+    writer_id: { type: Number, nullable: true },
+    actor1_id: { type: Number, nullable: true },
+    actor2_id: { type: Number, nullable: true },
+    actor3_id: { type: Number, nullable: true },
+    actor4_id: { type: Number, nullable: true },
+    actor5_id: { type: Number, nullable: true },
+  },
+  relations: {
+    people: {
+      type: 'many-to-many',
+      target: 'People',
+      inverseSide: 'movies',
+    },
   },
 });
 

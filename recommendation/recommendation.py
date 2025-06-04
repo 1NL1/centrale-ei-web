@@ -15,25 +15,17 @@ def cosine_similarity(u, m):
         return 0
     return (u @ m.T) / (norm_u * norm_m)
 
-def filmValide(m, i_film, id_forced_categories):
-    for id_forced_category in id_forced_categories:
-        if not m[i_film, id_forced_category] == 1:
-            return False
-    return True
-
-def recommend_movies(u, m, id_forced_categories):
+def recommend_movies(u, m):
     """
     u: vecteur utilisateur (caractéristiques) (matrice creuse)
     m: matrice des films (chaque ligne est un vecteur de caractéristiques d'un film) (matrice creuse)
-    id_forced_category: catégorie forcée pour la recherche par genre (optionnel, None par défaut)
     Retourne les indices des films recommandés triés par score décroissant
     """
     scores = []
     for i in range(m.shape[0]):
-        if id_forced_categories == [] or filmValide(m, i, id_forced_categories): #On ne considère que les films de la catégorie choisie
-            score = cosine_similarity(u, m[i, :-1])  # Exclure la dernière colonne (idFilm)
-            print(i, (m[i, -1], score))
-            scores.append((m[i, -1], score))
+        score = cosine_similarity(u, m[i, :-1])  # Exclure la dernière colonne (idFilm)
+        print(i, (m[i, -1], score))
+        scores.append((int(m[i, -1]), score))
     
     # Trier les films par score décroissant
     scores.sort(key=lambda x: x[1], reverse=True)
@@ -64,17 +56,11 @@ def calculate_user_vector(movies_matrix, user_ratings):
 
     return csr_matrix(user_vector)
 
-def recommendation(movies_matrix, user_ratings, id_forced_categories = []):
+def recommendation(movies_matrix, user_ratings):
     u = calculate_user_vector(movies_matrix, user_ratings)
-    return recommend_movies(u, movies_matrix, id_forced_categories)
-
-m = csr_matrix([[1, 0, 0, 1],
-                [1, 1, 0, 2],
-                [0, 1, 1, 3],
-                [0, 0, 1, 4]])
-print("m", m.toarray())
-user = [0, -1, 4, 5]
-print("here", recommendation(m,user))
+    movies = recommend_movies(u, movies_matrix)
+    print("Movies recommended:", movies)
+    return movies
 
 #PB: nouvel utilisateur? on a pas son profil...
 #==> recomendations populaires au debut? Avec possibilité de noter plein de films d'un coup? 

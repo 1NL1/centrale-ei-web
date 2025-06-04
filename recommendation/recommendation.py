@@ -6,7 +6,6 @@ import numpy as np
 from scipy.sparse import csr_matrix, linalg
 
 def cosine_similarity(u, m):
-    print("appel cosine")
     """
     Calcule la similarité cosinus entre deux vecteurs u et m
     """
@@ -16,7 +15,13 @@ def cosine_similarity(u, m):
         return 0
     return (u @ m.T) / (norm_u * norm_m)
 
-def recommend_movies(u, m, id_forced_category = None):
+def filmValide(m, i_film, id_forced_categories):
+    for id_forced_category in id_forced_categories:
+        if not m[i_film, id_forced_category] == 1:
+            return False
+    return True
+
+def recommend_movies(u, m, id_forced_categories):
     """
     u: vecteur utilisateur (caractéristiques) (matrice creuse)
     m: matrice des films (chaque ligne est un vecteur de caractéristiques d'un film) (matrice creuse)
@@ -25,7 +30,7 @@ def recommend_movies(u, m, id_forced_category = None):
     """
     scores = []
     for i in range(m.shape[0]):
-        if id_forced_category is None or m[i,id_forced_category] == 1: #On ne considère qu eles films de la catégorie choisie
+        if id_forced_categories == [] or filmValide(m, i, id_forced_categories): #On ne considère que les films de la catégorie choisie
             score = cosine_similarity(u, m[i, :-1])  # Exclure la dernière colonne (idFilm)
             print(i, (m[i, -1], score))
             scores.append((m[i, -1], score))
@@ -59,9 +64,9 @@ def calculate_user_vector(movies_matrix, user_ratings):
 
     return csr_matrix(user_vector)
 
-def recommendation(movies_matrix, user_ratings, id_forced_category = None):
+def recommendation(movies_matrix, user_ratings, id_forced_categories = []):
     u = calculate_user_vector(movies_matrix, user_ratings)
-    return recommend_movies(u, movies_matrix, id_forced_category)
+    return recommend_movies(u, movies_matrix, id_forced_categories)
 
 m = csr_matrix([[1, 0, 0, 1],
                 [1, 1, 0, 2],

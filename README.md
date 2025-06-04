@@ -70,6 +70,10 @@ Remplir base de données/profil admin --SACHA
 Page dédiée pour chaque film  
 Notations (like/dislike/etoiles)  
 Films triés par pertinence fct des likes -> recommendation au choix --ALEXIS
+* Algo de recommendation OK
+* Exploitation de la base de donnée pour créer les matrices sparses de l'utilisateur et des films
+* implémentation dans le front
+
 Beau et sans bug
 
 Bonus:
@@ -82,7 +86,7 @@ Python:
 
 1)
 Créer un api middleware qui fera tourner votre algorithme de recommendation
-Créer une api avec fastApi
+Créer une api avec fastApi et l'appeler depuis le front
 ??
 Mieux
 

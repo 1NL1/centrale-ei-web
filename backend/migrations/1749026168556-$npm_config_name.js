@@ -10,6 +10,7 @@ export default class  $npmConfigName1749026168556 {
     name = ' $npmConfigName1749026168556'
 
     async up(queryRunner) {
+        await queryRunner.query(`DROP TABLE IF EXISTS "movie"`);
         await queryRunner.query(`
             CREATE TABLE "movie" (
                 "id" integer PRIMARY KEY NOT NULL,

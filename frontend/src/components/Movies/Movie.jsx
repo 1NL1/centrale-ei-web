@@ -18,7 +18,7 @@ function Movie({ movie }) {
                 alt={title}
                 className="movie-poster"
             />
-            <div class="description">
+            <div className="description">
                 <h2>{title}</h2>
                 <p>Release Date: {release_date}</p>
                 <p>Note: {vote_average}</p>

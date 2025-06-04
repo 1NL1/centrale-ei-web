@@ -16,6 +16,10 @@ const Header = () => {
         Users
       </Link>
       <div>|</div>
+      <Link className="Link" to="/Page_authentification">
+        Authentification
+      </Link>
+      <div>|</div>
       <Link className="Link" to="/about">
         About
       </Link>

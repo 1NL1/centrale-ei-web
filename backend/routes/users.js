@@ -19,6 +19,8 @@ router.post('/new', function (req, res) {
     email: req.body.email,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    password: req.body.password,
+    dict: req.body.password,
   });
 
   userRepository

@@ -8,11 +8,7 @@ router.get('/', function (req, res) {
   const movieRepository = appDataSource.getRepository(Movie);
   movieRepository
     .find({
-      select: {
-        id: true,
-        title: true,
-        release_date: true,
-      },
+      select: {},
     })
     .then((movieTable) => {
       console.log(movieTable);

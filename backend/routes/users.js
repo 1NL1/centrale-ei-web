@@ -20,7 +20,7 @@ router.post('/new', function (req, res) {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     password: req.body.password,
-    dict: req.body.password,
+    dict: {},
   });
 
   userRepository

@@ -29,12 +29,23 @@ url_get_requests = "http://localhost:8000"
 init(url_get_requests)
 m = movie_matrix(url_get_requests)
 
+search_result = [] 
+user_vector_of_last_request = None
+
+
 @app.get("/search/{user_id}")
 def recommended_search(user_id: int):
     #movie_matrix, user_rating
+    global search_result, user_vector_of_last_request
     user_ratings = user_rating_vector(url_get_requests, user_id)
-    movie_matrix = m
-    search_result = recommendation(movie_matrix, user_ratings)
+    if user_vector_of_last_request is None or search_result == [] or (user_ratings != user_vector_of_last_request).nnz != 0:
+        movie_matrix = m
+        movie_ranking = recommendation(movie_matrix, user_ratings)
+
+        #global search_result, user_vector_of_last_request
+        user_vector_of_last_request = user_ratings
+        search_result = movie_ranking  
+
     return {"research_result": search_result}
 
 import uvicorn

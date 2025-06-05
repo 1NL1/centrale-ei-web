@@ -15,7 +15,7 @@ const User = new typeorm.EntitySchema({
     firstname: { type: String },
     lastname: { type: String },
     password: { type: String },
-    dict: { type: 'simple-json' },
+    ratings: {type: 'simple-json'},
   },
 });
 

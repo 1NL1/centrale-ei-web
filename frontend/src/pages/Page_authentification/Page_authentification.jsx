@@ -3,44 +3,47 @@ import axios from 'axios';
 import './Page_authentification.css';
 
 export default function PageAuthentification() {
-    const [nameUtilisateur, setNameUtilisateur] = useState('');
+    const [email, setEmail] = useState('');
     const [passwordUser, setPasswordUser] = useState('');
     const [message, setMessage] = useState('');
 
-    function verifPassword() {
-        axios
-            .get(`${import.meta.env.VITE_BACKEND_URL}/users/email/${nameUtilisateur}`)
-            .then((response) => {
-                const user = response.data;
-                if (!user) {
-                    setMessage(`Aucun utilisateur avec cet email.`);
-                    return;
-                }
+    async function verifPassword() {
+        if (!email || !passwordUser) {
+            setMessage('Veuillez remplir tous les champs.');
+            return;
+        }
 
-                const truePassword = user.password;
-                if (truePassword === passwordUser) {
-                    setMessage(`${nameUtilisateur} identifié`);
-                } else {
-                    setMessage(`Mot de passe incorrect.`);
-                }
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/email/${email}`);
+            const user = response.data;
 
-                setNameUtilisateur('');
-                setPasswordUser('');
-            })
-            .catch((error) => {
-                console.error('Erreur lors de la récupération:', error);
-                setMessage('Une erreur est survenue.');
-            });
+            if (!user || !user.password) {
+                setMessage('Aucun utilisateur avec cet email.');
+                return;
+            }
+
+            if (user.password === passwordUser) {
+                setMessage(`${user.lastname} identifié`);
+            } else {
+                setMessage('Mot de passe incorrect.');
+            }
+
+        } catch (error) {
+            console.error('Erreur lors de la récupération :', error);
+            setMessage('Une erreur est survenue.');
+        }
+
+        setEmail('');
+        setPasswordUser('');
     }
-
 
     return (
         <div className="Englobage_identifiaction">
             <input
                 type="text"
-                placeholder="Nom d'utilisateur"
-                value={nameUtilisateur}
-                onChange={(e) => setNameUtilisateur(e.target.value)}
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
             <input
                 type="password"

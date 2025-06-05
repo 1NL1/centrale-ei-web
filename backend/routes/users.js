@@ -55,4 +55,22 @@ router.delete('/:userId', function (req, res) {
     });
 });
 
+router.get('/email/:email', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+
+  userRepository
+    .findOneBy({ email: req.params.email })
+    .then(function (user) {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+    })
+    .catch(function (error) {
+      console.error('Erreur lors de la recherche par email :', error);
+      res.status(500).json({ message: 'Erreur serveur' });
+    });
+});
+
 export default router;

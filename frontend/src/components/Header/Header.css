@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 5px;
+  padding: 2vh;
   font-size: calc(10px + 2vmin);
   position: sticky;
   top: 0;
-  background-color: #282c34;
+  background-color: #141414;
   z-index: 10;
+  justify-content: space-between;
 }
 
 .Header-container > :not(:last-child) {
@@ -17,4 +18,41 @@
 .Link {
   font-weight: 700;
   color: white;
+  text-decoration: none;
+}
+
+.Header-left {
+  display: flex;
+  align-items: center;
+}
+
+.Header-right {
+  display: flex;
+  align-items: center;
+}
+
+#sign_in,
+#log_in {
+  margin: 1vw;
+  padding: 1vh;
+  border-radius: 20% 5%;
+}
+
+#sign_in {
+  background-color: rgb(179, 86, 86);
+  border: solid medium rgb(88, 39, 39);
+}
+
+#log_in {
+  background-color: rgb(73, 73, 149);
+  border: solid medium rgb(40, 40, 79);
+}
+
+#sign_in:hover {
+  background-color: rgb(190, 58, 58);
+  border: solid medium rgb(255, 255, 255);
+}
+#log_in:hover {
+  background-color: rgb(64, 64, 189);
+  border: solid medium rgb(255, 255, 255);
 }

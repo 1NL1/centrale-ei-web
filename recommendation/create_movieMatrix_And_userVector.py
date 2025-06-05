@@ -2,6 +2,8 @@ import requests
 from scipy.sparse import csr_matrix
 import json
 
+
+
 nb_genres = 0
 nb_people = 0
 nb_original_lenguage = 0
@@ -108,7 +110,6 @@ def movie_matrix(url_get):
 
         #Release date:
         release_date = movie["release_date"]
-        print("release_date", release_date)
         if release_date is not None and release_date != "":
             year_category = 0
             if int(release_date[:4]) < 1980:
@@ -131,11 +132,11 @@ def movie_matrix(url_get):
     return res.tocsr()
 
 def user_rating_vector(url_get, user_id):
-    user_json = requests.get(url).json(f"{url_get}/users/")
+    user_json = requests.get(f"{url_get}/users/").json()
     res = csr_matrix((1, nb_films))
     res = res.tolil()
 
-    user_ratings = user_json[str(user_id)]["ratings"]
+    user_ratings = user_json["users"][0]["dict"]
     for movie_id, rating in user_ratings.items():
         if movie_id in dico_id_film:
             res[0, dico_id_film[movie_id]] = rating + 1  # On ajoute 1 pour avoir des 0 dans le vecteur: 0 si non vu, 1 si vu avec note 0, etc

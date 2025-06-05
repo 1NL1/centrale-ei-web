@@ -31,7 +31,8 @@ function AddUserForm({ onSuccessfulUserCreation }) {
       ...formValues,
       dict: {},
     };
-    console.log(userToSend)
+    console.log('here');
+    console.log(userToSend);
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, userToSend)
       .then(() => {

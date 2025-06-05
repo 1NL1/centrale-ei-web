@@ -28,13 +28,13 @@
 }
 
 .movie-grid {
-  width:100vw;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:left;
-  gap:0.3vw;
-  padding:2vw;
+  justify-content: left;
+  gap: 0.3vw;
+  padding: 2vw;
 }
 
 @keyframes App-logo-spin {
@@ -44,4 +44,20 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.logo_and_title {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  display: inline-block;
+  height: 8vw;
+  width: auto;
+  margin-right: 2vw;
+}
+
+h1 {
+  display: inline-block;
 }

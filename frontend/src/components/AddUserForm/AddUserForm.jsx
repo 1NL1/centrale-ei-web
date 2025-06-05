@@ -31,7 +31,6 @@ function AddUserForm({ onSuccessfulUserCreation }) {
       ...formValues,
       dict: {},
     };
-    console.log('here');
     console.log(userToSend);
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, userToSend)
@@ -45,7 +44,6 @@ function AddUserForm({ onSuccessfulUserCreation }) {
         console.error(error);
       });
   };
-
 
   return (
     <div>

@@ -1,29 +1,31 @@
-/* eslint-disable prettier/prettier */
-import axios from 'axios';
 import './Movie.css';
+import { Link } from 'react-router-dom';
 
-function Movie({ movie }) {
+function Movie({ movie, people }) {
     const title = movie.title;
     const release_date = movie.release_date;
-    const vote_average = movie.vote_average;
+    const getPersonName = (id) => people.find(p => p.id === id)?.name || 'Inconnu';
+    const director = getPersonName(movie.director_id);
 
-
-    const image_path = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+    const image_path = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
 
     return (
-        <div className="movie-card">
-            <img
-                src={image_path}
-                alt={title}
-                className="movie-poster"
-            />
-            <div class="description">
-                <h2>{title}</h2>
-                <p>Release Date: {release_date}</p>
-                <p>Note: {vote_average}</p>
+        <Link to={`/movie/${movie.id}`} className="movie-card-link">
+            <div className="movie-card">
+                <img
+                    src={image_path}
+                    alt={title}
+                    className="movie-poster"
+                />
+                <div className="description">
+                    <h2>{title}</h2>
+                    <p>Date de sortie: {release_date}</p>
+                    <p>Réalisé par: {director}</p>
+
+                </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

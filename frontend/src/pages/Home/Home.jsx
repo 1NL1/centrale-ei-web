@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './Home.css';
 import { useFetchMovies } from './useFetchMoviesFromDatabase';
-import Movie from '../../components/Movies/movie';
+import { useFetchPeople } from './useFetchPeopleFromDatabase';
+import Movie from '../../components/Movies/Movie';
 import Button_cat from '../../components/Button_filter/Button';
 
 function Home() {
     const [movieName, setMovieName] = useState('');
     const { movies, moviesLoadingError } = useFetchMovies();
+    const { people, peopleLoadingError } = useFetchPeople();
     const [selectedGenres, setSelectedGenres] = useState({});
     const [moviesnew, setMoviesnew] = useState([]);
     const [debouncedValue, setDebouncedValue] = useState('');
@@ -38,16 +39,21 @@ function Home() {
 
             return matchesTitle && matchesGenre;
         });
-
+        console.log(people)
         setMoviesnew(filteredMovies);
     }, [debouncedValue, movies, selectedGenres]);
 
     return (
         <div className="App">
             <header className="App-header">
-                <h1>NetfliCS</h1>
-                <img src={logo} className="App-logo" alt="logo" />
-
+                <div className='logo_and_title'>
+                    <img
+                        src='../../public/logo.png'
+                        alt='logo'
+                        className="logo"
+                    />
+                    <h1>CinéSphère</h1>
+                </div>
                 <Button_cat
                     selectedGenres={selectedGenres}
                     setSelectedGenres={setSelectedGenres}
@@ -65,7 +71,7 @@ function Home() {
                 <div className="movie-grid">
                     {/* Affiche la liste filtrée (moviesnew) */}
                     {moviesnew.map(movie => (
-                        <Movie key={movie.id} movie={movie} />
+                        <Movie key={movie.id} movie={movie} people={people} />
                     ))}
                 </div>
             </header>

@@ -1,37 +1,42 @@
 .movie-card {
-    height: 21vw; /* ratio : width x1.5 */
-    width:14vw;
-    background-color: white;
-    color:black;
-    object-position: center;
-    justify-content:space-around;
-    flex-shrink:3;
-    overflow:hidden;
+  height: 21vw; /* ratio : width x1.5 */
+  width: 14vw;
+  background-color: white;
+  color: black;
+  object-position: center;
+  justify-content: space-around;
+  flex-shrink: 3;
+  overflow: hidden;
 }
 
 .movie-poster {
-    height:100%;
-    width: 100%;
-    object-fit: contain;
-    margin:0px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  margin: 0px;
 }
 .description {
-    visibility:none;
-    opacity:0;
-    height:105%;
-    width:100%;
-    position:relative;
-    top:-105%;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  visibility: none;
+  opacity: 0;
+  height: 105%;
+  width: 100%;
+  position: relative;
+  top: -105%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .description:hover {
-    visibility:visible;
-    opacity:1;
-    background-color: rgba(0, 0, 0, 0.63);
-    color:white;
-    font-size:1vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  visibility: visible;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.63);
+  color: white;
+  font-size: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.movie-card-link {
+  text-decoration: none;
 }

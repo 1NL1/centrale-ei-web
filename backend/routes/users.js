@@ -19,6 +19,8 @@ router.post('/new', function (req, res) {
     email: req.body.email,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    password: req.body.password,
+    dict: {},
   });
 
   userRepository
@@ -50,6 +52,24 @@ router.delete('/:userId', function (req, res) {
     })
     .catch(function () {
       res.status(500).json({ message: 'Error while deleting the user' });
+    });
+});
+
+router.get('/email/:email', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+
+  userRepository
+    .findOneBy({ email: req.params.email })
+    .then(function (user) {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+    })
+    .catch(function (error) {
+      console.error('Erreur lors de la recherche par email :', error);
+      res.status(500).json({ message: 'Erreur serveur' });
     });
 });
 

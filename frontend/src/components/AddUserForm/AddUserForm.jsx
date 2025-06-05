@@ -4,8 +4,10 @@ import './AddUserForm.css';
 
 const DEFAULT_FORM_VALUES = {
   email: '',
+  password: '',
   firstname: '',
   lastname: '',
+  dict: {},
 };
 
 function AddUserForm({ onSuccessfulUserCreation }) {
@@ -22,13 +24,16 @@ function AddUserForm({ onSuccessfulUserCreation }) {
   };
 
   const saveUser = (event) => {
-    // This avoid default page reload behavior on form submit
     event.preventDefault();
-
     setUserCreationError(null);
 
+    const userToSend = {
+      ...formValues,
+      dict: {},
+    };
+    console.log(userToSend);
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, formValues)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, userToSend)
       .then(() => {
         displayCreationSuccessMessage();
         setFormValues(DEFAULT_FORM_VALUES);
@@ -51,6 +56,16 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           value={formValues.email}
           onChange={(event) =>
             setFormValues({ ...formValues, email: event.target.value })
+          }
+        />
+        <input
+          className="add-user-input"
+          required
+          type="password"
+          placeholder="password"
+          value={formValues.password}
+          onChange={(event) =>
+            setFormValues({ ...formValues, password: event.target.value })
           }
         />
         <input

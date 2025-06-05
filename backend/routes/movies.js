@@ -49,13 +49,20 @@ router.post('/new', function (req, res) {
 
 router.get('/:movieId', function (req, res) {
   const movieRepository = appDataSource.getRepository(Movie);
-  movieRepository.findOneBy({ id: req.params.movieId }).then(function (movie) {
-    if (movie) {
-      res.status(200).json({ message: 'OK' });
-    } else {
-      res.status(404).json({ message: 'Not Found' });
-    }
-  });
+
+  movieRepository
+    .findOneBy({ id: req.params.movieId })
+    .then(function (movie) {
+      if (movie) {
+        res.status(200).json(movie); // Retourne les informations du film
+      } else {
+        res.status(404).json({ message: 'Not Found' });
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    });
 });
 
 router.delete('/:movieId', function (req, res) {

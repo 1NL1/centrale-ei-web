@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './Page_authentification.css';
+import { useLocalStorage } from './manager_id';
 
 export default function PageAuthentification() {
     const [email, setEmail] = useState('');
     const [passwordUser, setPasswordUser] = useState('');
     const [message, setMessage] = useState('');
+    const [storedUserId, setStoredUserId] = useLocalStorage('user_id', null);  // <-- hook ici
 
     async function verifPassword() {
         if (!email || !passwordUser) {
@@ -24,10 +26,12 @@ export default function PageAuthentification() {
 
             if (user.password === passwordUser) {
                 setMessage(`${user.lastname} identifié`);
+                setStoredUserId(user.id);
+                console.log('Mise à jour de l\'ID utilisateur:', user.id);
+
             } else {
                 setMessage('Mot de passe incorrect.');
             }
-
         } catch (error) {
             console.error('Erreur lors de la récupération :', error);
             setMessage('Une erreur est survenue.');

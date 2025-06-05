@@ -76,7 +76,7 @@ function populateDatabase(totalPage = 50) {
                     ]) {
                       const id = movieCrew[role];
                       if (id) {
-                        const personDetails = await fetchPerson(id); // Tu dois avoir cette fonction
+                        const personDetails = await fetchPerson(id);
                         const personEntity = await getOrCreatePerson(
                           personDetails,
                           peopleRepository
@@ -123,7 +123,7 @@ function populateDatabase(totalPage = 50) {
 
             return processNextPage(); // Traitement de la page suivante
           });
-      }
+      }/
 
       return processNextPage();
     })

@@ -36,7 +36,7 @@ function Home() {
         if (USE_RECOMMENDED) {
             console.log("Using recommended movies");
             axios
-                .get(`${import.meta.env.VITE_RECOMMENDATION_API_URL}/search/${user_id}`, {
+                .get(`${import.meta.env.VITE_RECOMMENDATION_API_URL}/search/${userId}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*',
@@ -101,7 +101,7 @@ function Home() {
             <header className="App-header">
                 <div className='logo_and_title'>
                     <img
-                        src='../../public/logo.png'
+                        src='../../logo.png'
                         alt='logo'
                         className="logo"
                     />

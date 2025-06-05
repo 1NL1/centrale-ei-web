@@ -13,6 +13,36 @@ router.get('/', function (req, res) {
     });
 });
 
+router.put('/users', (req, res) => {
+  const { userId, key, value } = req.query;
+  const userRepo = appDataSource.getRepository(User);
+
+  if (!userId || !key || !value) {
+    return res
+      .status(400)
+      .json({ message: 'Veuillez fournir userId, key et value.' });
+  }
+
+  userRepo
+    .findOneBy({ userId })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+      user.dict[key] = value;
+
+      return userRepo.save(user).then(() => {
+        res.status(200).json({ message: 'Dictionnaire mis à jour', dict: user.dict });
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du dictionnaire' });
+    });
+});
+
+
+
 router.post('/new', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
   const newUser = userRepository.create({

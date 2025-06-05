@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
+.movie-page {
+  height: 85vh;
+  width: 90vw;
+  background-color: rgb(174, 190, 198);
+  color: black;
+  object-position: center;
+  justify-content: space-around;
+  overflow: hidden;
+  margin: auto;
+  flex-direction: row;
+  display: flex;
+}
+
+.poster {
+  margin: 5vh;
+  height: 75vh;
+  width: auto;
+  object-fit: contain;
+  display: flex;
+}
+.presentation {
+  position: relative;
+  font-family: 'Dosis', sans-serif;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 5vh;
+  font-size: large;
+  overflow-y: scroll;
+}
+
+h2.presentation {
+  font-size: xx-large;
+  font-variant: small-caps;
+}
+
+.caracteristiques {
+  display: grid;
+  grid-template-columns: 50% 40%;
+  gap: 10%;
+  text-align: left;
+}
+
+.Retour {
+  text-decoration: none;
+  position: sticky;
+  top: 0px;
+  right: 0px;
+  color: black;
+  text-transform: uppercase;
+  font-size: small;
+  text-align: right;
+}
+
+.Retour:hover {
+  text-decoration: underline;
+}
+
+.notation {
+  flex-direction: row;
+}
+
+.etoile {
+  display: inline-block;
+  margin-left: 1vw;
+  font-size: xx-large;
+}

@@ -136,8 +136,15 @@ def user_rating_vector(url_get, user_id):
     res = csr_matrix((1, nb_films))
     res = res.tolil()
 
-    user_ratings = user_json["users"][0]["dict"]
+    user_ratings = next((user['dict'] for user in user_json['users'] if user['id'] == user_id), None)
+
+    if user_ratings is None:
+        print(f"User with ID {user_id} not found.")
+        return res.tocsr()
+
     for movie_id, rating in user_ratings.items():
+        rating = int(rating)        #en str dans le json
+        movie_id = int(movie_id)  
         if movie_id in dico_id_film:
             res[0, dico_id_film[movie_id]] = rating + 1  # On ajoute 1 pour avoir des 0 dans le vecteur: 0 si non vu, 1 si vu avec note 0, etc
                                                          #On veut des 0s car on travaille avec des matrices creuses

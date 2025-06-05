@@ -18,6 +18,7 @@ function Home() {
 
     // Décide si on utilise les films recommandés
     const USE_RECOMMENDED = userId !== null && userId !== 0;
+    console.log("USE_RECOMMENDED:", USE_RECOMMENDED, userId);
 
     // Debounce pour la recherche par titre
     useEffect(() => {

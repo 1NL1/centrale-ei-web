@@ -13,18 +13,15 @@ router.get('/', function (req, res) {
     });
 });
 
-router.put('/users', (req, res) => {
-  const { userId, key, value } = req.query;
+router.put('/', (req, res) => {
+  const { userId,key, value } = req.query;
   const userRepo = appDataSource.getRepository(User);
 
   if (!userId || !key || !value) {
-    return res
-      .status(400)
-      .json({ message: 'Veuillez fournir userId, key et value.' });
+    return res.status(400).json({ message: 'Veuillez fournir userId, key et value.' });
   }
 
-  userRepo
-    .findOneBy({ userId })
+  userRepo.findOneBy({ id: userId }) 
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: 'Utilisateur non trouvé' });

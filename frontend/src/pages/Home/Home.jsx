@@ -8,22 +8,7 @@ import axios from 'axios';
 import { useLocalStorage } from '../Page_authentification/manager_id';
 
 function Home() {
-    const [userId, setUserId] = useState(() => {
-        return JSON.parse(localStorage.getItem('user_id'));
-    });
-
-    // Option 1: Reload localStorage userId à intervalle régulier (pas idéal)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const storedId = JSON.parse(localStorage.getItem('user_id'));
-            if (storedId !== userId) {
-                setUserId(storedId);
-            }
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, [userId]);
-
+    const [userId, setUserId] = useLocalStorage('user_id', null);
     const [movieName, setMovieName] = useState('');
     const { movies, moviesLoadingError } = useFetchMovies();
     const { people, peopleLoadingError } = useFetchPeople();

@@ -33,9 +33,8 @@ function Home() {
 
         if (USE_RECOMMENDED) {
             console.log("Using recommended movies");
-            console.log(`${import.meta.env.RECOMMENDATION_API_URL}`);
             axios
-                .get(`http://localhost:8001/search/1`, {
+                .get(`${import.meta.env.VITE_RECOMMENDATION_API_URL}/search/${user_id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*', // Pour éviter les problèmes de CORS
@@ -59,6 +58,7 @@ function Home() {
                                 return matchesTitle && matchesGenre;
                             }
                         );
+                    console.log("Home - Sorted movies:", sortedMovies);
                     setMoviesnew(sortedMovies);
                 })
         }

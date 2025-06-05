@@ -38,15 +38,15 @@ def calculate_user_vector(movies_matrix, user_ratings):
     """
     Calcule le vecteur utilisateur à partir de la matrice des films
     movies_matrix: matrice des films (chaque ligne est un vecteur de caractéristiques d'un film) (matrice creuse)
-    user_ratings: vecteur des notes de l'utilisateur pour les films (matrice creuse)
+    user_ratings: vecteur des notes de l'utilisateur pour les films (matrice creuse) /!\ user ratings est décalé de 1 (0 si non vu, 1 si avec note 0, etc)
     Retourne le vecteur utilisateur
     """
-    user_mean_rating = np.mean([rating for rating in user_ratings if rating != -1])
+    user_mean_rating = np.mean([rating-1 for rating in user_ratings if rating-1 != -1])
     print("User mean rating:", user_mean_rating)
 
     user_vector = []
     for characteristic in range(movies_matrix.shape[1] - 1):
-        ratings = [user_ratings[j] - user_mean_rating for j in range(len(user_ratings)) if movies_matrix[j, characteristic] != 0 and user_ratings[j] != -1]
+        ratings = [user_ratings[j]-1 - user_mean_rating for j in range(len(user_ratings)) if movies_matrix[j, characteristic] != 0 and user_ratings[j]-1 != -1]
         print(f"characteristic {characteristic} : ", ratings)
         if ratings:
             mean = np.mean(ratings)

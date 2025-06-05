@@ -42,21 +42,25 @@ export default function PageAuthentification() {
     }
 
     return (
-        <div className="Englobage_identifiaction">
-            <input
-                type="text"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Mot de passe"
-                value={passwordUser}
-                onChange={(e) => setPasswordUser(e.target.value)}
-            />
-            <button onClick={verifPassword}>Se connecter</button>
-            {message && <p>{message}</p>}
+        <div className="Auth-container">
+            <h2>Log in here :</h2>
+            <div className="Englobage_identifiaction">
+                <input
+                    type="text"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Mot de passe"
+                    value={passwordUser}
+                    onChange={(e) => setPasswordUser(e.target.value)}
+                />
+                <button onClick={verifPassword}>Se connecter</button>
+                {message && <p>{message}</p>}
+            </div>
         </div>
+
     );
 }

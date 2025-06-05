@@ -2,6 +2,7 @@ import './MovieDetail.css';
 import { genreMap } from '../Button_filter/genre';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import notation from '../../../../backend/src/utils/Notation.js';
 
 function MovieDetail({ movie, people }) {
 

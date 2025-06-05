@@ -1,13 +1,11 @@
-import './MovieDetail.css';
-import { genreMap } from '../Button_filter/genre';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import notation from '../../../../backend/src/utils/Notation.js';
+import { Link } from 'react-router-dom';
+import { genreMap } from '../Button_filter/genre';
+import NotationComponent from './Notation.jsx';
+import './MovieDetail.css'
 
 function MovieDetail({ movie, people }) {
-
     // Affichage du film
-
     const title = movie.title;
     const release_date = movie.release_date;
 
@@ -28,7 +26,6 @@ function MovieDetail({ movie, people }) {
     const image_path = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
     // Notation du film
-
     const [hoveredRating, setHoveredRating] = useState(0);
     const [selectedRating, setSelectedRating] = useState(0);
 
@@ -42,40 +39,30 @@ function MovieDetail({ movie, people }) {
 
     const handleClick = (index) => {
         setSelectedRating(index);
-        notation(movie.id, index)
-        console.log("Note enregistrée :", index);
     };
-
 
     return (
         <div className="movie-page">
-            <img
-                src={image_path}
-                alt={title}
-                className="poster"
-            />
+            <img src={image_path} alt={title} className="poster" />
             <div className="presentation">
-                <Link to={`/`} className='Retour'><div >Retour aux films</div></Link>
+                <Link to="/" className="Retour">
+                    <div>Retour aux films</div>
+                </Link>
                 <h2>{title}</h2>
-                <div className='caracteristiques'>
-
-                    <div className='colonne'>
+                <div className="caracteristiques">
+                    <div className="colonne">
                         <p><b>Réalisé par :</b> {director}</p>
                         <p><b>Écrit par :</b> {writer}</p>
-
-                        <p>
-                            <b>Avec :</b> {actor1}, {actor2}, {actor3}, {actor4}, {actor5}
-                        </p>
+                        <p><b>Avec :</b> {actor1}, {actor2}, {actor3}, {actor4}, {actor5}</p>
                     </div>
-                    <div className='colonne'>
-
+                    <div className="colonne">
                         <p><b>Date de sortie :</b> {release_date}</p>
                         <p><i>{genres}</i></p>
-                        <div className='notation'>
+                        <div className="notation">
                             {[1, 2, 3, 4, 5].map((index) => (
                                 <span
                                     key={index}
-                                    className='etoile'
+                                    className="etoile"
                                     style={{ cursor: 'pointer' }}
                                     onMouseEnter={() => handleMouseEnter(index)}
                                     onMouseLeave={handleMouseLeave}
@@ -88,9 +75,11 @@ function MovieDetail({ movie, people }) {
                     </div>
                 </div>
                 <p>- - - - - - - - - - - - - - - - -</p>
-
                 <h3>Résumé</h3>
                 <p>{overview}</p>
+
+                {/* Le composant NotationComponent qui envoie la note dans la base */}
+                <NotationComponent movieId={movie.id} index={selectedRating} />
             </div>
         </div>
     );

@@ -34,10 +34,9 @@ function Home() {
             .map(([id]) => parseInt(id, 10));
 
         if (USE_RECOMMENDED) {
-            console.log("Using recommended movies for user", userId);
-
+            console.log("Using recommended movies");
             axios
-                .get(`http://localhost:8001/search/${userId}`, {
+                .get(`${import.meta.env.VITE_RECOMMENDATION_API_URL}/search/${user_id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*',

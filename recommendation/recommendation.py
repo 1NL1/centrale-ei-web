@@ -24,12 +24,10 @@ def recommend_movies(u, m):
     scores = []
     for i in range(m.shape[0]):
         score = cosine_similarity(u, m[i, :-1])  # Exclure la dernière colonne (idFilm)
-        print(i, (m[i, -1], score))
         scores.append((int(m[i, -1]), score))
     
     # Trier les films par score décroissant
     scores.sort(key=lambda x: x[1], reverse=True)
-    print("scores", scores)
     # Retourner les indices des films triés
     return [index for index, score in scores] #if score > 0]
 
@@ -38,16 +36,14 @@ def calculate_user_vector(movies_matrix, user_ratings):
     """
     Calcule le vecteur utilisateur à partir de la matrice des films
     movies_matrix: matrice des films (chaque ligne est un vecteur de caractéristiques d'un film) (matrice creuse)
-    user_ratings: vecteur des notes de l'utilisateur pour les films (matrice creuse)
+    user_ratings: vecteur des notes de l'utilisateur pour les films (matrice creuse) /!\ user ratings est décalé de 1 (0 si non vu, 1 si avec note 0, etc)
     Retourne le vecteur utilisateur
     """
-    user_mean_rating = np.mean([rating for rating in user_ratings if rating != -1])
-    print("User mean rating:", user_mean_rating)
+    user_mean_rating = np.mean([rating-1 for rating in user_ratings.data])
 
     user_vector = []
     for characteristic in range(movies_matrix.shape[1] - 1):
-        ratings = [user_ratings[j] - user_mean_rating for j in range(len(user_ratings)) if movies_matrix[j, characteristic] != 0 and user_ratings[j] != -1]
-        print(f"characteristic {characteristic} : ", ratings)
+        ratings = [rating-1 - user_mean_rating for idx, rating in zip(user_ratings.indices, user_ratings.data) if movies_matrix[idx, characteristic] != 0]
         if ratings:
             mean = np.mean(ratings)
             user_vector.append(mean)
@@ -59,7 +55,6 @@ def calculate_user_vector(movies_matrix, user_ratings):
 def recommendation(movies_matrix, user_ratings):
     u = calculate_user_vector(movies_matrix, user_ratings)
     movies = recommend_movies(u, movies_matrix)
-    print("Movies recommended:", movies)
     return movies
 
 #PB: nouvel utilisateur? on a pas son profil...

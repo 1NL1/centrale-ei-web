@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFetchUsers } from '../Users/useFetchUsers';
 import UsersTable from '../../components/UsersTable/UsersTable';
+import './admin.css';
 
 export default function Admin() {
   const [passwordUser, setPasswordUser] = useState('');
@@ -29,7 +30,8 @@ export default function Admin() {
       {isAuthenticated ? (
         adminAuth()
       ) : (
-        <>
+        <div className="input_field">
+          <h2>Identifiez vous : </h2>
           <input
             type="password"
             placeholder="Mot de passe"
@@ -38,7 +40,7 @@ export default function Admin() {
           />
           <button onClick={verifPassword}>Valider</button>
           {passwordUser === '' && !isAuthenticated && nonAuthen()}
-        </>
+        </div>
       )}
     </>
   );

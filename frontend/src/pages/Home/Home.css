@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
+* {
+  font-family: 'Dosis', sans-serif;
+}
 .App {
   text-align: center;
 }
@@ -49,6 +55,7 @@
 .logo_and_title {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .logo {
@@ -60,4 +67,26 @@
 
 h1 {
   display: inline-block;
+  font-family: 'Rubik Glitch', system-ui;
+  font-style: normal;
+  color: orange;
+  font-weight: 200;
+}
+
+.Recherche {
+  margin-top: 2vh;
+  padding: 1vh;
+  font-family: 'Dosis', system-ui;
+  background-color: #b7b7b72c;
+  color: orange;
+  font-size: large;
+  font-weight: 600;
+  border-radius: 10px;
+  border: rgba(255, 166, 0, 0.638) thin solid;
+  height: 7vh;
+  margin-left: 10vw;
+}
+
+.Recherche:hover {
+  border: rgba(255, 166, 0) solid thin;
 }

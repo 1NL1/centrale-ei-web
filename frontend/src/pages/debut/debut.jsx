@@ -11,16 +11,18 @@ function OnRatingPage() {
     const { people, peopleLoadingError } = useFetchPeople();
     const [userId] = useLocalStorage('user_id', null);
     const [userDict, setUserDict] = useState({});
+    const [selection, setSelection] = useState([]);
     const [ratedCount, setRatedCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // Charger le dictionnaire utilisateur au montage (une seule fois ici)
+    // Charger les notes utilisateur au début
     useEffect(() => {
         if (!userId) {
             setLoading(false);
             return;
         }
+
         setLoading(true);
         axios
             .get(`${import.meta.env.VITE_BACKEND_URL}/users/id/${userId}`)
@@ -36,63 +38,75 @@ function OnRatingPage() {
             });
     }, [userId]);
 
-    // Met à jour le nombre de films notés dès que userDict change
+    // Met à jour le nombre de films notés
     useEffect(() => {
         setRatedCount(Object.keys(userDict).length);
     }, [userDict]);
 
-    // Redirige quand on a noté au moins 10 films
+    // Redirection si on a noté 10 films
     useEffect(() => {
         if (ratedCount >= 10) {
             navigate('/');
         }
     }, [ratedCount, navigate]);
 
+    // Sélection initiale de 20 films, une seule fois
+    useEffect(() => {
+        if (movies && movies.length > 0 && selection.length === 0) {
+            const initial = [];
+            let index = Math.floor(Math.random() * 10); // entre 0 et 9
+            while (initial.length < 20 && index < movies.length) {
+                if (!userDict[movies[index].id]) {
+                    initial.push(movies[index]);
+                }
+                index += 1;
+            }
+            setSelection(initial);
+        }
+    }, [movies, selection.length, userDict]);
+
     if (loading) return <p>Chargement des données utilisateur...</p>;
     if (!movies || movies.length === 0) return <p>Chargement des films...</p>;
     if (!people || people.length === 0)
         return peopleLoadingError ? <p>{peopleLoadingError}</p> : <p>Chargement des personnes...</p>;
 
-    // Taille des lots aléatoire entre 5 ou 6
-    const batchSize = () => (Math.random() < 0.5 ? 5 : 6);
-
-    // Index de départ aléatoire entre 1 et 10
-    let startIndex = Math.floor(Math.random() * 10) + 1;
-
-    const selection = [];
-    while (selection.length < 40 && startIndex < movies.length) {
-        const size = batchSize();
-        const slice = movies.slice(startIndex, startIndex + size);
-        selection.push(...slice);
-        startIndex += size;
-    }
-
-    // Si on dépasse 40 films, on tronque
-    const finalSelection = selection.slice(0, 40);
     const handleRatingUpdate = (movieId, rating) => {
-        // Met à jour localement le dictionnaire utilisateur sans recharger depuis le backend
+        // Mettre à jour localement
         setUserDict(prevDict => ({
             ...prevDict,
             [movieId]: rating,
         }));
 
-        // Envoie la mise à jour au backend, sans toucher à userDict local
+        // Mettre à jour dans la BDD
         axios
-            .put(
-                `${import.meta.env.VITE_BACKEND_URL}/users`,
-                null,
-                {
-                    params: {
-                        userId: userId,
-                        key: movieId,
-                        value: rating,
-                    },
-                }
-            )
+            .put(`${import.meta.env.VITE_BACKEND_URL}/users`, null, {
+                params: {
+                    userId: userId,
+                    key: movieId,
+                    value: rating,
+                },
+            })
             .catch(err => {
                 console.error('Erreur mise à jour note:', err);
-                // Optionnel: tu peux ici revenir en arrière sur la modif locale ou afficher un message
             });
+
+        // Remplacement du film noté par un nouveau film dans un bloc défini
+        const blockStart = ratedCount * 10;
+        const blockEnd = Math.min(blockStart + 19, movies.length - 1);
+
+        const availableBlock = movies
+            .slice(blockStart, blockEnd + 1)
+            .filter(m => !userDict[m.id] && m.id !== movieId && !selection.some(sel => sel.id === m.id));
+
+        if (availableBlock.length === 0) return;
+
+        const replacement = availableBlock[Math.floor(Math.random() * availableBlock.length)];
+
+        setSelection(prevSelection =>
+            prevSelection.map(movie =>
+                movie.id === movieId ? replacement : movie
+            )
+        );
     };
 
     return (
@@ -106,12 +120,12 @@ function OnRatingPage() {
                         movie={movie}
                         people={people}
                         onRating={handleRatingUpdate}
+                        userDict={userDict}
                     />
                 </div>
             ))}
         </div>
     );
 }
-
 
 export default OnRatingPage;

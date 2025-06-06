@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
 .Header-container {
   display: flex;
   flex-direction: row;
@@ -6,9 +8,10 @@
   font-size: calc(10px + 2vmin);
   position: sticky;
   top: 0;
-  background-color: #141414;
+  background-color: #141414be;
   z-index: 10;
   justify-content: space-between;
+  align-items: center;
 }
 
 .Header-container > :not(:last-child) {
@@ -19,6 +22,10 @@
   font-weight: 700;
   color: white;
   text-decoration: none;
+  margin: 1vw;
+  padding: 1.2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
 }
 
 .Header-left {
@@ -31,28 +38,54 @@
   align-items: center;
 }
 
-#sign_in,
-#log_in {
-  margin: 1vw;
-  padding: 1vh;
-  border-radius: 20% 5%;
-}
-
 #sign_in {
   background-color: rgb(179, 86, 86);
-  border: solid medium rgb(88, 39, 39);
+  border: solid thin rgb(88, 39, 39);
 }
 
 #log_in {
   background-color: rgb(73, 73, 149);
-  border: solid medium rgb(40, 40, 79);
+  border: solid thin rgb(40, 40, 79);
 }
 
 #sign_in:hover {
   background-color: rgb(190, 58, 58);
-  border: solid medium rgb(255, 255, 255);
+  border: solid thin rgb(255, 255, 255);
 }
 #log_in:hover {
   background-color: rgb(64, 64, 189);
-  border: solid medium rgb(255, 255, 255);
+  border: solid thin rgb(255, 255, 255);
+}
+
+#home,
+#about {
+  border: solid thin #141414be;
+}
+
+#home:hover,
+#about:hover {
+  border: solid thin rgb(255, 255, 255);
+}
+
+.logo_font {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logo_top {
+  display: inline-block;
+  height: 7vh;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  margin-right: 2vw;
+}
+
+.title_top {
+  display: inline-block;
+  font-family: 'Rubik Glitch', sans-serif;
+  color: orange;
+  line-height: 0vh;
+  padding: 0;
 }

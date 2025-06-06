@@ -56,6 +56,3 @@ def recommendation(movies_matrix, user_ratings):
     u = calculate_user_vector(movies_matrix, user_ratings)
     movies = recommend_movies(u, movies_matrix)
     return movies
-
-#PB: nouvel utilisateur? on a pas son profil...
-#==> recomendations populaires au debut? Avec possibilité de noter plein de films d'un coup? 

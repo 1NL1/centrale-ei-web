@@ -1,12 +1,10 @@
-'''/!\ pip install fastapi uvicorn'''
-
 from fastapi import FastAPI
 from recommendation import recommendation
 from scipy.sparse import csr_matrix
 from fastapi.middleware.cors import CORSMiddleware
-import requests
 
 from create_movieMatrix_And_userVector import movie_matrix, user_rating_vector, init
+from similar_movies import similar_movies
 
 app = FastAPI()
 
@@ -47,6 +45,12 @@ def recommended_search(user_id: int):
         search_result = movie_ranking  
 
     return {"research_result": search_result}
+
+@app.get("/search_similar/{movie_id}")
+def search_similar(movie_id: int):
+    search_similar_result = similar_movies(m, movie_id)[:5]
+
+    return {"similar_movies": search_similar_result}
 
 import uvicorn
 uvicorn.run(app, port=8001)

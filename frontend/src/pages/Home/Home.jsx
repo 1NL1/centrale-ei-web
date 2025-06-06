@@ -107,18 +107,21 @@ function Home() {
                         className="logo"
                     />
                     <h1>CinéSphère</h1>
+                    <input
+                        type="text"
+                        className="Recherche"
+                        value={movieName}
+                        onChange={(e) => setMovieName(e.target.value)}
+                        placeholder="Rechercher un film"
+                    />
                 </div>
+
                 <Button_cat
                     selectedGenres={selectedGenres}
                     setSelectedGenres={setSelectedGenres}
                 />
 
-                <input
-                    type="text"
-                    value={movieName}
-                    onChange={(e) => setMovieName(e.target.value)}
-                    placeholder="Rechercher un film"
-                />
+
 
                 {moviesLoadingError && <p style={{ color: 'red' }}>{moviesLoadingError}</p>}
 

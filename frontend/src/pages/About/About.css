@@ -1,3 +1,12 @@
 .about {
   text-align: center;
+  align-items: center;
+  flex-direction: column;
+  color: orange;
+}
+
+.logo_about {
+  height: 50vh;
+  width: auto;
+  object-fit: contain;
 }

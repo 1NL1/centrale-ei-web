@@ -106,7 +106,6 @@ function OnRatingPage() {
                         movie={movie}
                         people={people}
                         onRating={handleRatingUpdate}
-                        initialRating={userDict[movie.id] || 0} // passe la note actuelle si existante
                     />
                 </div>
             ))}

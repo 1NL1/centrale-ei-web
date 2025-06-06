@@ -10,9 +10,7 @@ function MoviePage() {
     const [userId, setUserId] = useLocalStorage('user_id', null);
     const { movies } = useFetchMovies();
     const { people } = useFetchPeople();
-    console.log("rating", userId, id);
     const { rating } = useFetchRating(userId, id);
-    console.log("rating final", rating);
 
     if (!movies || movies.length === 0 || !people || people.length === 0) {
         return <p>Chargement...</p>;

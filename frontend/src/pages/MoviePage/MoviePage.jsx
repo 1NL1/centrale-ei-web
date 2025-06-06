@@ -4,6 +4,7 @@ import { useFetchPeople } from '../Home/useFetchPeopleFromDatabase';
 import { useFetchRating } from '../Home/useFetchRatingFromDatabase';
 import MovieDetail from '../../components/MovieDetails/MovieDetail';
 import { useLocalStorage } from '../Page_authentification/manager_id';
+import SimilarMovies from '../../components/SimilarMovies/SimilarMovies';
 
 function MoviePage() {
     const { id } = useParams();
@@ -22,7 +23,10 @@ function MoviePage() {
         return <p>Film non trouvé.</p>;
     }
 
-    return <MovieDetail movie={movie} people={people} rating={rating} />;
+    return <>
+        <MovieDetail movie={movie} people={people} rating={rating} />
+        <SimilarMovies movie={movie} />
+    </>;
 }
 
 export default MoviePage;

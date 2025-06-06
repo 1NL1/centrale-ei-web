@@ -4,7 +4,7 @@ import { genreMap } from '../Button_filter/genre';
 import NotationComponent from './Notation.jsx';
 import './MovieDetail.css'
 
-function MovieDetail({ movie, people }) {
+function MovieDetail({ movie, people, rating }) {
     // Affichage du film
     const title = movie.title;
     const release_date = movie.release_date;
@@ -27,7 +27,8 @@ function MovieDetail({ movie, people }) {
 
     // Notation du film
     const [hoveredRating, setHoveredRating] = useState(0);
-    const [selectedRating, setSelectedRating] = useState(0);
+    console.log("ICI rating", rating);
+    const [selectedRating, setSelectedRating] = useState(rating || 0);
 
     const handleMouseEnter = (index) => {
         setHoveredRating(index);

@@ -2,7 +2,7 @@ import { fetchMovies } from '../utils/fetchMovies.js';
 import { fetchCrew } from '../utils/FetchCrew.js';
 import { fetchPerson } from '../utils/FetchPerson.js';
 
-import Movie from '../../entities/movie.js';
+import Movie from '../../entities/movie.jsx';
 import People from '../../entities/people.js';
 import { appDataSource } from '../../datasource.js';
 

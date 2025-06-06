@@ -14,9 +14,15 @@ function MoviePage() {
     const { rating } = useFetchRating(userId, id);
     console.log("rating final", rating);
 
-    const movie = movies.find(m => m.id === parseInt(id));
+    if (!movies || movies.length === 0 || !people || people.length === 0) {
+        return <p>Chargement...</p>;
+    }
 
-    if (!movie || !people) return <p>Chargement...</p>;
+    const movie = movies.find(m => m.id === parseInt(id, 10));
+
+    if (!movie) {
+        return <p>Film non trouvé.</p>;
+    }
 
     return <MovieDetail movie={movie} people={people} rating={rating} />;
 }

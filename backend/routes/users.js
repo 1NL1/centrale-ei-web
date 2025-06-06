@@ -13,6 +13,25 @@ router.get('/', function (req, res) {
     });
 });
 
+router.get('/id/:userId', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+  const userId = req.params.userId;
+
+  userRepository
+    .findOneBy({ id: userId })
+    .then(function (user) {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+    })
+    .catch(function (error) {
+      console.error('Erreur lors de la recherche par userId :', error);
+      res.status(500).json({ message: 'Erreur serveur' });
+    });
+});
+
 router.put('/', (req, res) => {
   const { userId,key, value } = req.query;
   const userRepo = appDataSource.getRepository(User);

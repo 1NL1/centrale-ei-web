@@ -30,9 +30,8 @@ export default function ButtonCat({ selectedGenres, setSelectedGenres }) {
           {Object.entries(genreMap).map(([id, name]) => (
             <button
               key={id}
-              className={`genre-button ${
-                isGenreSelected(id) ? 'selected' : ''
-              }`}
+              className={`genre-button ${isGenreSelected(id) ? 'selected' : ''
+                }`}
               onClick={() => toggleGenre(id)}
             >
               {name}

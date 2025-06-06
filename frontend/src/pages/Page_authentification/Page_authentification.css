@@ -1,3 +1,13 @@
+.Auth-container {
+  background-color: #141414;
+  color: #f0f0f0;
+  min-height: 50vh;
+  padding: 5vw;
+  font-family: 'Dosis', sans-serif;
+  text-align: center;
+  font-variant: small-caps;
+}
+
 .Englobage_identifiaction {
   display: flex;
   flex-direction: column;

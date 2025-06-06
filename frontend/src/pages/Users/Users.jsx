@@ -8,7 +8,9 @@ function Users() {
 
   return (
     <div className="Users-container">
-      <h1>New user</h1>
+      <h1>New User ?</h1><br />
+      <h2>Sign in here :</h2>
+
       <AddUserForm onSuccessfulUserCreation={fetchUsers} />
       {usersLoadingError !== null && (
         <div className="users-loading-error">{usersLoadingError}</div>

@@ -4,11 +4,10 @@ import { genreMap } from '../Button_filter/genre';
 import NotationComponent from './Notation.jsx';
 import './MovieDetail.css'
 
-function MovieDetail({ movie, people }) {
+function MovieDetail({ movie, people, onRating }) {
     // Affichage du film
     const title = movie.title;
     const release_date = movie.release_date;
-
     const getPersonName = (id) => people.find(p => p.id === id)?.name || 'Inconnu';
     const director = getPersonName(movie.director_id);
     const writer = getPersonName(movie.writer_id);
@@ -39,6 +38,9 @@ function MovieDetail({ movie, people }) {
 
     const handleClick = (index) => {
         setSelectedRating(index);
+        if (onRating) {
+            onRating(movie.id, index);
+        }
     };
 
     return (

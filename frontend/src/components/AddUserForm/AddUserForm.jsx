@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './AddUserForm.css';
+import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from '../../pages/Page_authentification/manager_id';
 
 const DEFAULT_FORM_VALUES = {
   email: '',
@@ -12,9 +14,11 @@ const DEFAULT_FORM_VALUES = {
 
 function AddUserForm({ onSuccessfulUserCreation }) {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
-
   const [userCreationError, setUserCreationError] = useState(null);
   const [userCreationSuccess, setUserCreationSuccess] = useState(null);
+
+  const navigate = useNavigate();
+  const [userId, setUserId] = useLocalStorage('user_id', null);
 
   const displayCreationSuccessMessage = () => {
     setUserCreationSuccess('New user created successfully');
@@ -31,16 +35,21 @@ function AddUserForm({ onSuccessfulUserCreation }) {
       ...formValues,
       dict: {},
     };
-    console.log(userToSend);
+
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, userToSend)
-      .then(() => {
+      .then((response) => {
+        const newUserId = response.data.id;
+        setUserId(newUserId);
         displayCreationSuccessMessage();
         setFormValues(DEFAULT_FORM_VALUES);
-        onSuccessfulUserCreation();
+        if (onSuccessfulUserCreation) {
+          onSuccessfulUserCreation();
+        }
+        navigate('/newuser');  // <-- ici la route doit correspondre à ton router
       })
       .catch((error) => {
-        setUserCreationError('An error occured while creating new user.');
+        setUserCreationError('An error occurred while creating the user.');
         console.error(error);
       });
   };
@@ -54,46 +63,35 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           type="email"
           placeholder="Email"
           value={formValues.email}
-          onChange={(event) =>
-            setFormValues({ ...formValues, email: event.target.value })
-          }
+          onChange={(e) => setFormValues({ ...formValues, email: e.target.value })}
         />
         <input
           className="add-user-input"
           required
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={formValues.password}
-          onChange={(event) =>
-            setFormValues({ ...formValues, password: event.target.value })
-          }
+          onChange={(e) => setFormValues({ ...formValues, password: e.target.value })}
         />
         <input
           className="add-user-input"
           placeholder="First name"
           value={formValues.firstname}
-          onChange={(event) =>
-            setFormValues({ ...formValues, firstname: event.target.value })
-          }
+          onChange={(e) => setFormValues({ ...formValues, firstname: e.target.value })}
         />
         <input
           className="add-user-input"
           placeholder="Last name"
           value={formValues.lastname}
-          onChange={(event) =>
-            setFormValues({ ...formValues, lastname: event.target.value })
-          }
+          onChange={(e) => setFormValues({ ...formValues, lastname: e.target.value })}
         />
         <button className="add-user-button" type="submit">
           Add user
         </button>
       </form>
-      {userCreationSuccess !== null && (
-        <div className="user-creation-success">{userCreationSuccess}</div>
-      )}
-      {userCreationError !== null && (
-        <div className="user-creation-error">{userCreationError}</div>
-      )}
+
+      {userCreationSuccess && <div className="user-creation-success">{userCreationSuccess}</div>}
+      {userCreationError && <div className="user-creation-error">{userCreationError}</div>}
     </div>
   );
 }
